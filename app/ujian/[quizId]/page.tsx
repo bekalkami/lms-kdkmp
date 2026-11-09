@@ -26,16 +26,15 @@ export default async function Ujian({
 
   if (!user) redirect("/login");
 
-  // Ambil data ujian tanpa relasi courses terlebih dahulu.
+  // Ambil data ujian dari Supabase.
   const { data: q, error: qError } = await sb
     .from("quizzes")
     .select(
-      "id,course_id,title,type,time_limit_min,passing_score,question_count,max_attempts"
+      "id,course_id,title,type,time_limit_min,passing_score,question_count"
     )
     .eq("id", params.quizId)
     .maybeSingle();
 
-  // Tampilkan error database secara langsung.
   if (qError) {
     return (
       <div className="space-y-4">
@@ -77,7 +76,7 @@ export default async function Ujian({
     );
   }
 
-  // Ambil kursus secara terpisah.
+  // Ambil informasi kursus.
   const { data: c, error: cError } = await sb
     .from("courses")
     .select("slug,title")
@@ -96,7 +95,8 @@ export default async function Ujian({
         </h1>
 
         <p className="rounded-xl bg-merah-muda p-4 break-words">
-          {cError?.message ?? "Kursus yang terhubung dengan ujian ini tidak ditemukan."}
+          {cError?.message ??
+            "Kursus yang terhubung dengan ujian ini tidak ditemukan."}
         </p>
       </div>
     );
@@ -138,9 +138,6 @@ export default async function Ujian({
         <li>Jumlah soal: {q.question_count} (diacak)</li>
         <li>Waktu: {q.time_limit_min} menit</li>
         <li>Nilai minimal lulus: {q.passing_score}</li>
-        {q.max_attempts && (
-          <li>Batas percobaan: {q.max_attempts}</li>
-        )}
       </ul>
 
       <p className="text-base text-gray-600">
@@ -150,7 +147,8 @@ export default async function Ujian({
 
       <form action={mulaiUjian}>
         <input type="hidden" name="quizId" value={q.id} />
-        <button className="btn">
+
+        <button type="submit" className="btn">
           {jalan ? "Lanjutkan percobaan" : "Mulai"}
         </button>
       </form>
