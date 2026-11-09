@@ -1,0 +1,13 @@
+{ "course": "dasar-perkoperasian-kdkmp", "title": "Kuis Modul 1", "passing_score": 70, "note": "Dimuat ke bank soal pada Tahap C.",
+  "questions": [
+  {"q":"Dasar hukum perkoperasian di Indonesia adalah...","o":["UU No. 25 Tahun 1992","UU No. 1 Tahun 1974","UU No. 40 Tahun 2007","UU No. 6 Tahun 2014"],"a":0,"e":"Perkoperasian diatur dalam UU No. 25 Tahun 1992."},
+  {"q":"Pemegang kekuasaan tertinggi dalam koperasi adalah...","o":["Pengurus","Pengawas","Rapat Anggota","Manajer"],"a":2,"e":"Rapat Anggota memegang kekuasaan tertinggi."},
+  {"q":"Tiga perangkat organisasi koperasi adalah...","o":["Rapat Anggota, Pengurus, Pengawas","Direktur, Komisaris, Manajer","Ketua, Bendahara, Kasir","Kepala desa, Camat, Bupati"],"a":0,"e":"Perangkatnya: Rapat Anggota, Pengurus, dan Pengawas."},
+  {"q":"Sisa Hasil Usaha (SHU) dibagi secara adil sebanding dengan...","o":["Lamanya menjadi anggota","Jasa usaha masing-masing anggota","Jabatan anggota","Jumlah anggota keluarga"],"a":1,"e":"Pembagian SHU sebanding dengan jasa usaha anggota."},
+  {"q":"Keanggotaan koperasi bersifat...","o":["Wajib bagi semua warga","Sukarela dan terbuka","Hanya untuk pengurus","Hanya untuk pemilik modal besar"],"a":1,"e":"Prinsip pertama: keanggotaan sukarela dan terbuka."},
+  {"q":"Pembentukan KDKMP didasarkan pada...","o":["Inpres No. 9 Tahun 2025","Perda kabupaten","Keputusan RT/RW","Surat edaran bank"],"a":0,"e":"Dasarnya Inpres No. 9 Tahun 2025."},
+  {"q":"Target jumlah koperasi dalam Inpres tersebut sekitar...","o":["800","8.000","80.000","800.000"],"a":2,"e":"Targetnya sekitar 80.000 koperasi desa/kelurahan."},
+  {"q":"Format nama yang benar untuk koperasi di sebuah desa adalah...","o":["Desa Sukamaju Koperasi","Koperasi Desa Merah Putih Sukamaju","Merah Putih Sukamaju Desa","Koperasi Sukamaju Mandiri Sejahtera"],"a":1,"e":"Diawali \"Koperasi\", lalu \"Desa Merah Putih\", lalu nama desa."},
+  {"q":"Mana yang TIDAK termasuk kegiatan usaha yang disebut dalam Inpres?","o":["Apotek desa","Cold storage","Simpan pinjam","Pabrik otomotif"],"a":3,"e":"Inpres menyebut kantor, sembako, simpan pinjam, klinik, apotek, cold storage, dan logistik."},
+  {"q":"Tugas utama Pengawas koperasi adalah...","o":["Menjual barang di gerai","Mengawasi kebijakan dan pengelolaan koperasi","Mengurus kasir harian","Menentukan harga pemasok"],"a":1,"e":"Pengawas mengawasi pelaksanaan kebijakan dan pengelolaan koperasi."}
+]}
