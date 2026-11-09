@@ -6,6 +6,16 @@ import { Md } from "@/components/Md";
 import VideoOnDemand from "@/components/VideoOnDemand";
 import { tandaiSelesai } from "../../actions";
 
+type Lesson = {
+  id: string;
+  title: string;
+  type: string;
+  content_md: string | null;
+  video_url: string | null;
+  file_url: string | null;
+  position: number;
+};
+
 export default async function Pelajaran({
   params,
 }: {
@@ -19,55 +29,96 @@ export default async function Pelajaran({
 
   if (!user) redirect("/login");
 
-  const { data: c } = await sb
+  // Ambil kursus
+  const { data: course, error: courseError } = await sb
     .from("courses")
-    .select("id,title")
+    .select("id, title")
     .eq("slug", params.slug)
     .maybeSingle();
 
-  if (!c) notFound();
+  if (courseError) {
+    console.error("Gagal mengambil kursus:", courseError.message);
+  }
 
-  const { data: mods } = await sb
+  if (!course) notFound();
+
+  // Ambil modul beserta materi
+  const { data: modules, error: moduleError } = await sb
     .from("modules")
-    .select(
-      "position, lessons(id,title,type,content_md,video_url,file_url,position)"
-    )
-    .eq("course_id", c.id)
+    .select(`
+      id,
+      position,
+      lessons (
+        id,
+        title,
+        type,
+        content_md,
+        video_url,
+        file_url,
+        position
+      )
+    `)
+    .eq("course_id", course.id)
     .order("position");
 
-  const flat = (mods ?? []).flatMap((m: any) =>
-    [...(m.lessons ?? [])].sort(
-      (a: any, b: any) => a.position - b.position
+  if (moduleError) {
+    console.error("Gagal mengambil modul:", moduleError.message);
+  }
+
+  // Gabungkan semua materi dan urutkan berdasarkan modul serta posisi materi
+  const flat: Lesson[] = (modules ?? [])
+    .flatMap((module: any) =>
+      (module.lessons ?? []).map((lesson: Lesson) => ({
+        ...lesson,
+        modulePosition: module.position,
+      }))
     )
+    .sort(
+      (a: any, b: any) =>
+        a.modulePosition - b.modulePosition ||
+        a.position - b.position
+    );
+
+  // Cari materi yang sedang dibuka
+  const index = flat.findIndex(
+    (lesson) => lesson.id === params.lessonId
   );
 
-  const i = flat.findIndex(
-    (l: any) => l.id === params.lessonId
-  );
+  if (index < 0) notFound();
 
-  if (i < 0) notFound();
+  const lesson = flat[index];
+  const next = flat[index + 1]?.id ?? "";
 
-  const l: any = flat[i];
-  const next = flat[i + 1]?.id ?? "";
+  // Daftarkan peserta ke kursus
+  const { error: enrollmentError } = await sb
+    .from("enrollments")
+    .upsert(
+      {
+        user_id: user.id,
+        course_id: course.id,
+      },
+      {
+        onConflict: "user_id,course_id",
+        ignoreDuplicates: true,
+      }
+    );
 
-  await sb.from("enrollments").upsert(
-    {
-      user_id: user.id,
-      course_id: c.id,
-    },
-    {
-      onConflict: "user_id,course_id",
-      ignoreDuplicates: true,
-    }
-  );
+  if (enrollmentError) {
+    console.error("Gagal membuat enrollment:", enrollmentError.message);
+  }
 
-  const { data: dn } = await sb
+  // Periksa progres materi
+  const { data: progress, error: progressError } = await sb
     .from("lesson_progress")
     .select("lesson_id")
     .eq("user_id", user.id)
-    .eq("lesson_id", l.id);
+    .eq("lesson_id", lesson.id);
 
-  const sudah = (dn ?? []).length > 0;
+  if (progressError) {
+    console.error("Gagal mengambil progres:", progressError.message);
+  }
+
+  const sudah = (progress ?? []).length > 0;
 
   return (
     <div className="space-y-5">
@@ -75,34 +126,47 @@ export default async function Pelajaran({
         href={`/kursus/${params.slug}`}
         className="font-bold text-merah underline"
       >
-        ← {c.title}
+        ← {course.title}
       </Link>
 
-      <h1 className="text-2xl font-black">{l.title}</h1>
+      <h1 className="text-2xl font-black">
+        {lesson.title}
+      </h1>
 
-      {l.type === "video" && l.video_url && (
-        <VideoOnDemand url={l.video_url} />
+      {lesson.type === "video" && lesson.video_url && (
+        <VideoOnDemand url={lesson.video_url} />
       )}
 
-      {(l.type === "pdf" || l.type === "infografis") &&
-        l.file_url && (
+      {(lesson.type === "pdf" ||
+        lesson.type === "infografis") &&
+        lesson.file_url && (
           <a
-            href={l.file_url}
+            href={lesson.file_url}
             target="_blank"
             rel="noopener noreferrer"
             className="btn-alt"
           >
-            Buka {l.type === "pdf" ? "PDF" : "infografis"}
+            Buka {lesson.type === "pdf" ? "PDF" : "infografis"}
           </a>
         )}
 
-      <Md text={l.content_md} />
+      {lesson.content_md && (
+        <Md text={lesson.content_md} />
+      )}
+
+      {!lesson.content_md &&
+        !lesson.video_url &&
+        !lesson.file_url && (
+          <p className="text-gray-500">
+            Materi untuk pelajaran ini belum tersedia.
+          </p>
+        )}
 
       <form action={tandaiSelesai}>
         <input
           type="hidden"
           name="lessonId"
-          value={l.id}
+          value={lesson.id}
         />
 
         <input
