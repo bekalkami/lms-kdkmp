@@ -19,6 +19,7 @@ export default async function Dasbor() {
     {admin && <div className="space-y-3"><Link href="/admin/laporan" className="btn">📊 Laporan & ekspor</Link><Link href="/admin/peserta/impor" className="btn-alt">👥 Impor peserta (CSV)</Link>{p!.role === "admin_pusat" && <Link href="/admin/konten" className="btn-alt">🛠️ Kelola kursus, materi & bank soal</Link>}</div>}
     {p!.role === "peserta" && <><Link href="/kursus" className="btn">📚 Buka Katalog Kursus</Link><RingkasanPeserta userId={user!.id} /><Link href="/sertifikat" className="btn-alt">🎓 Sertifikat Saya</Link></>}
     {p!.role === "fasilitator" && <p className="rounded-xl border-2 border-gray-200 p-4 font-semibold text-gray-500">Peserta binaan dan forum tanya jawab: Tahap E2</p>}
+    <Link href="/akun/email" className="block text-center font-bold text-merah underline">Verifikasi email</Link>
     <Link href="/akun/sandi" className="block text-center font-bold text-merah underline">Ganti kata sandi</Link>
     <form action={logout}><button className="btn-alt">Keluar</button></form>
   </div>);

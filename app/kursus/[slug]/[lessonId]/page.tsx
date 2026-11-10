@@ -84,7 +84,11 @@ export default async function Pelajaran({
     (lesson) => lesson.id === params.lessonId
   );
 
-  if (index < 0) notFound();
+  if (index < 0) {
+    const { data: boleh } = await sb.rpc("has_access", { p_course: course.id });
+    if (!boleh) redirect(`/kursus/${params.slug}/akses`);
+    notFound();
+  }
 
   const lesson = flat[index];
   const next = flat[index + 1]?.id ?? "";

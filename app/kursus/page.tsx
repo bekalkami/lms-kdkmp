@@ -8,7 +8,7 @@ export default async function Katalog() {
   if (!user) redirect("/login");
   const [me, cs, ls, dn] = await Promise.all([
     sb.from("profiles").select("jabatan").eq("id", user!.id).single(),
-    sb.from("courses").select("id,slug,title,description,jabatan_target").eq("published", true).order("position"),
+    sb.from("courses").select("id,slug,title,description,jabatan_target,is_premium,price_idr").eq("published", true).order("position"),
     sb.from("lessons").select("id, modules(course_id)"),
     sb.from("lesson_progress").select("lesson_id").eq("user_id", user!.id),
   ]);
@@ -20,7 +20,7 @@ export default async function Katalog() {
   const mine = all.filter((c) => c.jabatan_target.includes(jab)); const rest = all.filter((c) => !c.jabatan_target.includes(jab));
   const Card = ({ c }: { c: (typeof all)[number] }) => { const t = total[c.id] ?? 0, f = fin[c.id] ?? 0, pct = t ? Math.round((f / t) * 100) : 0;
     return (<Link href={`/kursus/${c.slug}`} className="block rounded-2xl border-2 border-gray-200 p-4 active:border-merah">
-      <b className="text-lg">{c.title}</b><p className="text-base text-gray-600">{c.description}</p>
+      <b className="text-lg">{c.title}</b>{c.is_premium && <span className="ml-2 rounded-full bg-merah-muda px-2 py-0.5 text-xs font-black text-merah-tua">PREMIUM</span>}<p className="text-base text-gray-600">{c.description}</p>
       <div className="mt-3 h-3 overflow-hidden rounded-full bg-gray-200"><div className="h-full bg-merah" style={{ width: `${pct}%` }} /></div>
       <p className="mt-1 text-sm font-semibold">{t ? `${f}/${t} pelajaran · ${pct}%` : "Materi sedang disiapkan"}</p></Link>); };
   return (<div className="space-y-5">

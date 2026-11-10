@@ -18,11 +18,14 @@ export default async function Kursus({
 
   const { data: c } = await sb
     .from("courses")
-    .select("id,title,description")
+    .select("id,title,description,is_premium,price_idr")
     .eq("slug", params.slug)
     .maybeSingle();
 
   if (!c) notFound();
+
+  const { data: punyaAkses } = await sb.rpc("has_access", { p_course: c.id });
+  const terkunci = c.is_premium && !punyaAkses;
 
   const [modsResult, dnResult, qzResult] = await Promise.all([
     sb
@@ -79,6 +82,13 @@ export default async function Kursus({
 
       <p>{c.description}</p>
 
+      {terkunci && (
+        <Link href={`/kursus/${params.slug}/akses`} className="block rounded-2xl border-2 border-merah bg-merah-muda p-4">
+          <b className="text-merah-tua">🔒 Kursus premium · Rp {c.price_idr.toLocaleString("id-ID")}</b>
+          <span className="block">Buka akses atau coba trial →</span>
+        </Link>
+      )}
+
       {all.length > 0 && (
         <p className="rounded-xl bg-merah-muda p-3 font-bold">
           Progres: {finished} dari {all.length} pelajaran selesai
@@ -91,7 +101,7 @@ export default async function Kursus({
 
           {(m.lessons ?? []).length === 0 && (
             <p className="text-gray-500">
-              Materi sedang disiapkan.
+              {terkunci ? "🔒 Terkunci. Buka akses premium untuk melihat materi." : "Materi sedang disiapkan."}
             </p>
           )}
 
