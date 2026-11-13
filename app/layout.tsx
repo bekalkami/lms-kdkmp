@@ -2,8 +2,9 @@ import "./globals.css";
 import { Plus_Jakarta_Sans } from "next/font/google";
 import Link from "next/link";
 import ThemeSwitcher from "@/components/ThemeSwitcher";
-import CompanionWidget from "@/components/CompanionWidget";
+import RoamingCompanion from "@/components/RoamingCompanion";
 import { SoraPixel, ShiroPixel } from "@/components/PixelCharacters";
+
 
 const jakarta = Plus_Jakarta_Sans({
   subsets: ["latin"],
@@ -77,10 +78,11 @@ export default function Root({ children }: { children: React.ReactNode }) {
           {children}
         </main>
 
-        {/* 8-bit Screen Assistant (Fixed on Every Page) */}
-        <CompanionWidget />
+        {/* 8-bit Interactive Roaming Assistant (Walks & wanders autonomously across screen) */}
+        <RoamingCompanion />
 
         {/* Apple-styled Glass Footer */}
+
         <footer className="mt-auto border-t border-black/5 bg-white/40 py-8 text-xs text-neutral-500 backdrop-blur-md dark:border-white/5 dark:bg-black/40 dark:text-neutral-400">
           <div className="mx-auto flex max-w-4xl flex-col sm:flex-row items-center justify-between gap-4 px-4">
             <div className="flex items-center gap-2">
