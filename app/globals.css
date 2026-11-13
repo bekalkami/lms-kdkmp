@@ -30,3 +30,16 @@
   @apply rounded-none border-2 border-neutral-200 bg-white p-5 transition-all dark:border-neutral-800 dark:bg-neutral-900;
 }
 
+/* Neo-brutalist Flat Shadow Utility */
+.flat-shadow {
+  box-shadow: 4px 4px 0px 0px rgba(0, 0, 0, 0.9);
+}
+.dark .flat-shadow {
+  box-shadow: 4px 4px 0px 0px rgba(255, 255, 255, 0.85);
+}
+
+.flat-shadow-red {
+  box-shadow: 4px 4px 0px 0px #C8102E;
+}
+
+

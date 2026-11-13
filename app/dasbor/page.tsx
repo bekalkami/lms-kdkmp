@@ -16,7 +16,7 @@ export default async function Dasbor() {
   return (
     <div className="space-y-6">
       {/* Profile Banner */}
-      <div className="flat-card border-l-4 border-l-merah space-y-3">
+      <div className="flat-card border-l-4 border-l-merah space-y-3 flat-shadow">
         <div className="flex flex-wrap items-center justify-between gap-2">
           <span className="inline-block border-2 border-merah bg-merah-muda/60 px-2 py-0.5 text-xs font-bebas uppercase tracking-wider text-merah-tua dark:bg-merah-tua/30 dark:text-red-300">
             {ROLE_LABEL[p!.role]}
@@ -33,7 +33,18 @@ export default async function Dasbor() {
           {k ? ` · ${k.name}, ${k.village}` : ""}
           {p!.regency ? ` · ${p!.regency}` : ""}
         </p>
+
+        {/* Shiro Tactical Status Tip */}
+        <div className="mt-3 border-t border-neutral-200 dark:border-neutral-800 pt-3 flex items-center gap-2 text-xs font-medium text-neutral-600 dark:text-neutral-300">
+          <span className="grid h-5 w-5 place-items-center bg-indigo-600 text-[10px] font-bold text-white shrink-0">
+            白
+          </span>
+          <span>
+            <b>Shiro Assistant:</b> Status kelulusan tersinkronisasi. Jangan ragu bertanya pada kami jika ada kendala materi.
+          </span>
+        </div>
       </div>
+
 
       {/* Admin Actions */}
       {admin && (

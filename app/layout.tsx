@@ -2,8 +2,10 @@ import "./globals.css";
 import { Bebas_Neue, Plus_Jakarta_Sans } from "next/font/google";
 import Link from "next/link";
 import DarkModeToggle from "@/components/DarkModeToggle";
+import VirtualAssistant from "@/components/VirtualAssistant";
 
 const bebas = Bebas_Neue({
+
   weight: "400",
   subsets: ["latin"],
   variable: "--font-bebas",
@@ -66,7 +68,10 @@ export default function Root({ children }: { children: React.ReactNode }) {
           {children}
         </main>
 
+        <VirtualAssistant />
+
         <footer className="border-t-2 border-neutral-200 bg-white py-6 dark:border-neutral-800 dark:bg-neutral-950 text-neutral-500 dark:text-neutral-400 text-xs">
+
           <div className="mx-auto flex max-w-4xl flex-col sm:flex-row items-center justify-between gap-4 px-4">
             <p className="font-medium">
               © {new Date().getFullYear()} LMS KDKMP · Portal Resmi Pelatihan Koperasi Desa
