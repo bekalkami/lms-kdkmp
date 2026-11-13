@@ -1,5 +1,32 @@
-@tailwind base; @tailwind components; @tailwind utilities;
-body { @apply bg-white text-gray-900 text-lg antialiased; }
-.input { @apply w-full rounded-xl border-2 border-gray-300 px-4 py-3 focus:border-merah focus:outline-none; }
-.btn { @apply block w-full rounded-xl bg-merah px-6 py-4 text-center text-lg font-bold text-white active:bg-merah-tua; }
-.btn-alt { @apply block w-full rounded-xl border-2 border-merah px-6 py-4 text-center text-lg font-bold text-merah; }
+@tailwind base;
+@tailwind components;
+@tailwind utilities;
+
+@layer base {
+  body {
+    @apply bg-neutral-50 text-neutral-900 antialiased transition-colors duration-200 dark:bg-neutral-950 dark:text-neutral-100;
+  }
+}
+
+.font-bebas {
+  font-family: var(--font-bebas), sans-serif;
+  letter-spacing: 0.04em;
+}
+
+/* Minimal Flat UI Components */
+.input {
+  @apply w-full rounded-none border-2 border-neutral-300 bg-white px-4 py-3 text-base text-neutral-900 transition-colors focus:border-merah focus:outline-none dark:border-neutral-700 dark:bg-neutral-900 dark:text-neutral-100 dark:focus:border-merah;
+}
+
+.btn {
+  @apply inline-flex items-center justify-center w-full rounded-none border-2 border-merah bg-merah px-6 py-3.5 text-center text-lg font-bebas uppercase tracking-wider text-white transition-all hover:bg-merah-tua hover:border-merah-tua active:translate-y-0.5 disabled:opacity-50;
+}
+
+.btn-alt {
+  @apply inline-flex items-center justify-center w-full rounded-none border-2 border-neutral-900 bg-transparent px-6 py-3.5 text-center text-lg font-bebas uppercase tracking-wider text-neutral-900 transition-all hover:bg-neutral-900 hover:text-white dark:border-neutral-200 dark:text-neutral-100 dark:hover:bg-neutral-100 dark:hover:text-neutral-900 active:translate-y-0.5;
+}
+
+.flat-card {
+  @apply rounded-none border-2 border-neutral-200 bg-white p-5 transition-all dark:border-neutral-800 dark:bg-neutral-900;
+}
+
