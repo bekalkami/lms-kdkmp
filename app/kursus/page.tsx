@@ -31,30 +31,30 @@ export default async function Katalog() {
     return (
       <Link
         href={`/kursus/${c.slug}`}
-        className="flat-card group block transition-all hover:border-neutral-900 dark:hover:border-neutral-300"
+        className="glass-panel group block p-6 transition-all hover:scale-[1.01]"
       >
-        <div className="flex flex-wrap items-center justify-between gap-2">
-          <h3 className="font-bebas text-2xl text-neutral-900 dark:text-white uppercase tracking-tight group-hover:text-merah transition-colors">
+        <div className="flex flex-wrap items-center justify-between gap-2 mb-2">
+          <h3 className="text-lg font-bold text-neutral-900 dark:text-white tracking-tight group-hover:text-apple-blue transition-colors">
             {c.title}
           </h3>
           {c.is_premium && (
-            <span className="border border-merah bg-merah-muda/60 px-2 py-0.5 text-[11px] font-bebas uppercase tracking-wider text-merah-tua dark:bg-merah-tua/30 dark:text-red-300">
+            <span className="rounded-pill bg-merah/10 px-2.5 py-0.5 text-[11px] font-semibold text-merah dark:bg-merah/20 dark:text-red-300">
               PREMIUM
             </span>
           )}
         </div>
 
-        <p className="mt-1 text-sm text-neutral-600 dark:text-neutral-400 line-clamp-2">
+        <p className="text-xs text-neutral-500 dark:text-neutral-400 line-clamp-2 leading-relaxed">
           {c.description}
         </p>
 
-        <div className="mt-4 pt-3 border-t border-neutral-100 dark:border-neutral-800">
-          <div className="h-2 w-full overflow-hidden bg-neutral-200 dark:bg-neutral-800">
-            <div className="h-full bg-merah transition-all" style={{ width: `${pct}%` }} />
+        <div className="mt-5 pt-3 border-t border-neutral-100 dark:border-white/5">
+          <div className="h-1.5 w-full overflow-hidden rounded-full bg-neutral-200/80 dark:bg-neutral-800">
+            <div className="h-full bg-apple-blue rounded-full transition-all duration-500" style={{ width: `${pct}%` }} />
           </div>
-          <div className="mt-2 flex items-center justify-between text-xs font-semibold text-neutral-500">
+          <div className="mt-2 flex items-center justify-between text-[11px] font-medium text-neutral-400">
             <span>{t ? `${f}/${t} Pelajaran Selesai` : "Materi sedang disiapkan"}</span>
-            <span className="font-mono">{pct}%</span>
+            <span className="font-semibold text-neutral-700 dark:text-neutral-300">{pct}%</span>
           </div>
         </div>
       </Link>
@@ -64,20 +64,20 @@ export default async function Katalog() {
   return (
     <div className="space-y-8">
       <div>
-        <Link href="/dasbor" className="text-xs font-bold uppercase tracking-wider text-merah hover:underline inline-flex items-center gap-1">
+        <Link href="/dasbor" className="text-xs font-semibold text-apple-blue hover:text-apple-hover inline-flex items-center gap-1">
           ← Kembali ke Dasbor
         </Link>
-        <h1 className="font-bebas text-4xl sm:text-5xl text-neutral-900 dark:text-white uppercase tracking-tight mt-2">
+        <h1 className="text-3xl sm:text-4xl font-extrabold text-neutral-900 dark:text-white tracking-tight mt-2">
           Katalog Kursus
         </h1>
-        <p className="text-sm text-neutral-600 dark:text-neutral-400">
+        <p className="text-sm text-neutral-500 dark:text-neutral-400">
           Kurikulum resmi yang disesuaikan dengan peran kerja dan tupoksi Anda di KDKMP.
         </p>
       </div>
 
       <div className="space-y-4">
-        <div className="flex items-center gap-2 border-b-2 border-merah pb-2">
-          <span className="font-bebas text-2xl text-neutral-900 dark:text-white uppercase tracking-wide">
+        <div className="flex items-center gap-2 border-b border-black/5 dark:border-white/10 pb-2">
+          <span className="text-base font-bold text-neutral-900 dark:text-white">
             Jalur Wajib: {JABATAN.find(([v]) => v === jab)?.[1] ?? "Tupoksi Anda"}
           </span>
         </div>
@@ -90,8 +90,8 @@ export default async function Katalog() {
 
       {rest.length > 0 && (
         <div className="space-y-4 pt-4">
-          <div className="flex items-center gap-2 border-b-2 border-neutral-300 dark:border-neutral-800 pb-2">
-            <span className="font-bebas text-2xl text-neutral-500 uppercase tracking-wide">
+          <div className="flex items-center gap-2 border-b border-black/5 dark:border-white/10 pb-2">
+            <span className="text-base font-bold text-neutral-500">
               Modul Tambahan Lainnya
             </span>
           </div>
@@ -105,4 +105,5 @@ export default async function Katalog() {
     </div>
   );
 }
+
 
